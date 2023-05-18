@@ -1,0 +1,46 @@
+.sidebar {
+    width: 250px;
+    height: 100%;
+    background-color: #151529;
+    flex-shrink: 0;
+    color: white;
+}
+
+.logo {
+    text-align: center;
+    margin-top: 12px;
+}
+
+.logo>a {
+    text-decoration: none;
+    color: white;
+}
+
+.menu {
+    padding: 0 12px;
+}
+
+.menu li {
+    padding: 6px 8px;
+    background-color: #ececec2f;
+    margin: 6px 0;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    border-radius: 4px;
+}
+
+.menu li:hover {
+    background-color: #ececec50;
+}
+
+.subMenuClose {
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.subMenuOpen {
+    height: 100%;
+    opacity: 1;
+    visibility: visible;
+}
