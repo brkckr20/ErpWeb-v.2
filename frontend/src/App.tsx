@@ -1,19 +1,24 @@
 import SideBar from "./components/Sidebar";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
+import Protected from "./pages/Protected";
+
 import styles from "./App.module.css";
 import MalzemeKarti from "./pages/Kartlar/MalzemeKarti";
 import MalzemeKodlama from "./pages/Kodlama/MalzemeKodlama";
 import Anasayfa from "./pages/Anasayfa";
+import Giris from "./pages/Giris";
 
 function App() {
+  const { pathname } = useLocation();
   return (
     <div className={styles.container}>
-      <SideBar />
+      {pathname !== "/giris" && <SideBar />}
       <div className={styles.content}>
         <Switch>
-          <Route path="/malzemekarti" component={MalzemeKarti} />
-          <Route path="/malzemekodlama" component={MalzemeKodlama} />
-          <Route path="/" component={Anasayfa} />
+          <Route exact path="/giris" component={Giris} />
+          <Protected exact path="/malzemekarti" component={MalzemeKarti} />
+          <Protected exact path="/malzemekodlama" component={MalzemeKodlama} />
+          <Protected exact path="/" component={Anasayfa} />
         </Switch>
       </div>
     </div>
