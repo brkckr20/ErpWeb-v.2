@@ -3,10 +3,10 @@ import { Switch, Route, useLocation } from "react-router-dom";
 import Protected from "./pages/Protected";
 
 import styles from "./App.module.css";
-import MalzemeKarti from "./pages/Kartlar/MalzemeKarti";
 import MalzemeKodlama from "./pages/Kodlama/MalzemeKodlama";
 import Anasayfa from "./pages/Anasayfa";
 import Giris from "./pages/Giris";
+import BirimKodlama from "./pages/Kodlama/BirimKodlama";
 
 function App() {
   const { pathname } = useLocation();
@@ -16,8 +16,8 @@ function App() {
       <div className={styles.content}>
         <Switch>
           <Route exact path="/giris" component={Giris} />
-          <Protected exact path="/malzemekarti" component={MalzemeKarti} />
           <Protected exact path="/malzemekodlama" component={MalzemeKodlama} />
+          <Protected exact path="/birimkodlama" component={BirimKodlama} />
           <Protected exact path="/" component={Anasayfa} />
         </Switch>
       </div>

@@ -6,5 +6,12 @@ export interface MalzemeInterface{
 }
 
 export interface KodlamaIsimleri{
-    isim : 'malzemekodlama' | 'yarimamuldepo'
+    isim : 'malzemekodlama' | 'birimkodlama'
+}
+
+export interface BirimInterface{
+    id?: number;
+    ad : string,
+    kisa_kod : string,
+    depo : string,
 }

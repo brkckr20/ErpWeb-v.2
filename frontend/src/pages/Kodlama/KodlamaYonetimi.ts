@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { MalzemeInterface, KodlamaIsimleri } from '../../interfaces';
+import { MalzemeInterface, KodlamaIsimleri, BirimInterface } from '../../interfaces';
 import { BASE_URL } from '../../config';
 const baseRoute = "kodlama";
 
 export class KodlamaYonetimi{
 
-    async kodlamaKaydet(depoadi : KodlamaIsimleri, veri : MalzemeInterface) {
+    async kodlamaKaydet(depoadi : KodlamaIsimleri, veri : MalzemeInterface | BirimInterface) {
         const response = await axios.post(`${BASE_URL}/${baseRoute}/${depoadi.isim}`, veri)
         return response.data;
     }

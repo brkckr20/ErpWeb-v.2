@@ -55,6 +55,7 @@ export const authSlice = createSlice({
             localStorage.setItem('kullanici', JSON.stringify(action.payload.user));
             state.loading = false;
             state.user = action.payload.user;
+            state.status = action.payload.message
             
         })
     },

@@ -1,22 +1,27 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { useAppDispatch, useAppSelector } from "../../contexts/store";
+import { useAppDispatch } from "../../contexts/store";
 import { login } from "../../contexts/auth/authSlice";
+import { useHistory } from "react-router-dom";
 
 const Giris = () => {
   const dispactch = useAppDispatch();
-
-  const auth = useAppSelector((state) => state.auth);
 
   const [formValues, setFormValues] = useState({
     kullaniciAdi: "ADMIN",
     sifre: "",
   });
 
+  const history = useHistory();
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    await dispactch(login(formValues));
+    const response = await dispactch(login(formValues));
+    console.log(response.payload.message);
+    if (response.payload.message === "loginSuccessfully") {
+      history.push("/");
+    }
   };
 
   return (

@@ -15,31 +15,9 @@ const SideBar = () => {
           template: () => <Link to="/malzemekodlama">Malzeme Kodlama</Link>,
         },
         {
-          label: "Kumaş Kodlama",
-          items: [
-            {
-              label: "Bookmark",
-              icon: "pi pi-fw pi-bookmark",
-              template: () => <Link to="/malzemekodlama">Kumaş Adı</Link>,
-            },
-            {
-              label: "Bookmark",
-              icon: "pi pi-fw pi-bookmark",
-              template: () => <Link to="/malzemekodlama">Kumaş Kartı</Link>,
-            },
-            {
-              label: "Bookmark",
-              icon: "pi pi-fw pi-bookmark",
-              template: () => <Link to="/malzemekodlama">Kumaş Cinsi</Link>,
-            },
-            {
-              label: "Bookmark",
-              icon: "pi pi-fw pi-bookmark",
-              template: () => (
-                <Link to="/malzemekodlama">Kumaş Desenlerinin Kodlanması</Link>
-              ),
-            },
-          ],
+          label: "Birim Kodlama",
+          icon: "pi pi-fw pi-plus",
+          template: () => <Link to="/birimkodlama">Birim Kodlama</Link>,
         },
       ],
     },
