@@ -15,7 +15,7 @@ export class KodlamaYonetimi{
         return response.data;
     }
 
-    async kodlamaGuncelle(depoadi : KodlamaIsimleri, veri : MalzemeInterface) {
+    async kodlamaGuncelle(depoadi : KodlamaIsimleri, veri : MalzemeInterface | BirimInterface) {
         const response = await axios.put(`${BASE_URL}/${baseRoute}/${depoadi.isim}`, veri)
         return response.data;
     }

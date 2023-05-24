@@ -10,14 +10,32 @@ const SideBar = () => {
       icon: "pi pi-fw pi-code",
       items: [
         {
-          label: "Malzeme Kodlama",
-          icon: "pi pi-fw pi-plus",
           template: () => <Link to="/malzemekodlama">Malzeme Kodlama</Link>,
         },
         {
-          label: "Birim Kodlama",
-          icon: "pi pi-fw pi-plus",
           template: () => <Link to="/birimkodlama">Birim Kodlama</Link>,
+        },
+      ],
+    },
+    {
+      label: "Kartlar",
+      icon: "pi pi-fw pi-building",
+      items: [
+        {
+          template: () => (
+            <Link to="/firmakarti">Firma Kartı (düzenlenecek)</Link>
+          ),
+        },
+      ],
+    },
+    {
+      label: "Sarf Malz. Depo",
+      icon: "pi pi-fw pi-th-large",
+      items: [
+        {
+          template: () => (
+            <Link to="/sarfmalzemegiris">Sarf Malz. Giriş (düzenlenecek)</Link>
+          ),
         },
       ],
     },

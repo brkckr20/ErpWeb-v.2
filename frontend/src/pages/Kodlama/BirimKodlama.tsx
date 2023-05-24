@@ -28,16 +28,16 @@ const BirimKodlama = () => {
       label: "Güncelle",
       icon: "pi pi-fw pi-pencil",
       command: () => {
-        // setUpdateForm(secilenSatir);
-        // setUpdateVisible(true);
+        setUpdateForm(secilenSatir);
+        setUpdateVisible(true);
       },
     },
     {
       label: "Sil",
       icon: "pi pi-fw pi-trash",
       command: () => {
-        //  setUpdateForm(secilenSatir);
-        //  sil();
+        setUpdateForm(secilenSatir);
+        sil();
       },
     },
   ];
@@ -50,9 +50,9 @@ const BirimKodlama = () => {
 
   const [updateForm, setUpdateForm] = useState<BirimInterface | null | any>({
     id: 0,
-    malzeme_kodu: "",
-    malzeme_adi: "",
-    depo_adi: "malzemedepo",
+    ad: "",
+    kisa_kod: "",
+    depo: "malzemedepo",
   });
 
   const show = (data: any) => {
@@ -71,6 +71,7 @@ const BirimKodlama = () => {
 
   const kaydet = () => {
     kodlamaYonetimi.kodlamaKaydet(depoAdi, form).then((data) => {
+      console.log(data);
       show(data);
       setForm({ ad: "", kisa_kod: "", depo: "" });
     });
@@ -103,7 +104,7 @@ const BirimKodlama = () => {
       <Button
         label="Kaydet"
         icon="pi pi-check"
-        onClick={null || kaydet}
+        onClick={kaydet}
         autoFocus
         severity="success"
       />
@@ -115,7 +116,7 @@ const BirimKodlama = () => {
       <Button
         label="Güncelle"
         icon="pi pi-check"
-        onClick={null || guncelle}
+        onClick={guncelle}
         autoFocus
         severity="success"
       />
@@ -197,27 +198,27 @@ const BirimKodlama = () => {
                 />
               </div>
               <div className="flex flex-column gap-2">
-                <label>Malzeme Kodu</label>
+                <label>Birim Adı</label>
                 <InputText
                   className="p-inputtext-sm"
-                  value={updateForm?.malzeme_kodu}
+                  value={updateForm?.ad}
                   onChange={(e) =>
                     setUpdateForm({
                       ...updateForm,
-                      malzeme_kodu: e.target.value,
+                      ad: e.target.value,
                     })
                   }
                 />
               </div>
               <div className="flex flex-column gap-2">
-                <label>Malzeme Adı</label>
+                <label>Kısa Kod</label>
                 <InputText
                   className="p-inputtext-sm"
-                  value={updateForm?.malzeme_adi}
+                  value={updateForm?.kisa_kod}
                   onChange={(e) =>
                     setUpdateForm({
                       ...updateForm,
-                      malzeme_adi: e.target.value,
+                      kisa_kod: e.target.value,
                     })
                   }
                 />
@@ -226,9 +227,9 @@ const BirimKodlama = () => {
                 <label>Depo Adı</label>
                 <InputText
                   className="p-inputtext-sm"
-                  value={updateForm?.depo_adi}
+                  value={updateForm?.depo}
                   onChange={(e) =>
-                    setUpdateForm({ ...updateForm, depo_adi: e.target.value })
+                    setUpdateForm({ ...updateForm, depo: e.target.value })
                   }
                 />
               </div>
