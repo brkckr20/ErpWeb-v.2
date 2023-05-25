@@ -17,7 +17,7 @@ export interface BirimInterface{
 }
 
 export interface FirmaKartiInterface{
-    id: number;
+    id?: number;
     firma_kodu: string;
     firma_unvan1: string;
     adres1: string;
