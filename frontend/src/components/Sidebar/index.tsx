@@ -22,9 +22,7 @@ const SideBar = () => {
       icon: "pi pi-fw pi-building",
       items: [
         {
-          template: () => (
-            <Link to="/firmakarti">Firma Kartı (düzenlenecek)</Link>
-          ),
+          template: () => <Link to="/firmakarti">Firma Kartı</Link>,
         },
       ],
     },

@@ -7,6 +7,7 @@ import MalzemeKodlama from "./pages/Kodlama/MalzemeKodlama";
 import Anasayfa from "./pages/Anasayfa";
 import Giris from "./pages/Giris";
 import BirimKodlama from "./pages/Kodlama/BirimKodlama";
+import FirmaKarti from "./pages/Kartlar/FirmaKarti";
 
 function App() {
   const { pathname } = useLocation();
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/giris" component={Giris} />
           <Protected exact path="/malzemekodlama" component={MalzemeKodlama} />
           <Protected exact path="/birimkodlama" component={BirimKodlama} />
+          <Protected exact path="/firmakarti" component={FirmaKarti} />
           <Protected exact path="/" component={Anasayfa} />
         </Switch>
       </div>
