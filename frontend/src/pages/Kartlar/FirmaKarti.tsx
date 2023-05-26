@@ -1,11 +1,14 @@
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FirmaKartiInterface } from "../../interfaces";
 import { getFieldLabel } from "../../utils/getFieldLabel";
 import { KartYonetimi } from "../Kartlar/_KartYonetimi";
 import { Toast } from "primereact/toast";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { gelenFieldIsimleriniObjectKeyiOlarakAyarla } from "../../utils/gelenFieldIsimleriniObjectKeyiOlarakAyarla";
 
 const kartYonetimi = new KartYonetimi();
 
@@ -29,6 +32,8 @@ const initialValues: FirmaKartiInterface = {
 const FirmaKarti = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [saveForm, setSaveForm] = useState<FirmaKartiInterface>(initialValues);
+  const [firmaListesi, setFirmaListesi] = useState<FirmaKartiInterface[]>([]);
+  const [fieldList, setFieldList] = useState<any>([]);
 
   const toast = useRef<Toast>(null);
 
@@ -39,6 +44,13 @@ const FirmaKarti = () => {
       detail: data.mesaj,
     });
   };
+
+  const columns = fieldList.map((field: any) => ({
+    field,
+    header: getFieldLabel(field),
+  }));
+
+  const fieldToArray = columns.map((item: any) => item.field);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -71,13 +83,20 @@ const FirmaKarti = () => {
       />
     </div>
   );
+
+  useEffect(() => {
+    kartYonetimi.kartGetir("firmakarti").then((data) => {
+      setFirmaListesi(data);
+      setFieldList(Object.keys(data[0]));
+    });
+  }, []);
+
   return (
     <React.Fragment>
       <Toast ref={toast} />
       <div className="w-full h-full surface-200 p-1">
-        <div className="flex gap-1">
+        <div className="flex gap-1 mb-1">
           <Button
-            label=""
             icon="pi pi-plus"
             size="small"
             severity="info"
@@ -109,6 +128,29 @@ const FirmaKarti = () => {
             </div>
           </Dialog>
         </div>
+        <DataTable
+          value={firmaListesi}
+          dataKey="id"
+          emptyMessage="Gösterilecek kayıt yok"
+          size="small"
+          globalFilterFields={fieldToArray}
+          showGridlines
+          stripedRows
+          // onContextMenu={(e) => cm.current?.show(e.originalEvent)}
+          // onContextMenuSelectionChange={(e: any) =>
+          //   setSecilenSatir(e.value)
+          // }
+        >
+          {columns.map((column: any) => (
+            <Column
+              key={column.field}
+              field={column.field}
+              header={column.header}
+              filter
+              filterPlaceholder={`${column.header} a göre ara`}
+            />
+          ))}
+        </DataTable>
       </div>
     </React.Fragment>
   );
