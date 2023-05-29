@@ -8,6 +8,7 @@ import Anasayfa from "./pages/Anasayfa";
 import Giris from "./pages/Giris";
 import BirimKodlama from "./pages/Kodlama/BirimKodlama";
 import FirmaKarti from "./pages/Kartlar/FirmaKarti";
+import SarfMalzemeGiris from "./pages/SarfMalzeme/Giris";
 
 function App() {
   const { pathname } = useLocation();
@@ -17,6 +18,11 @@ function App() {
       <div className={styles.content}>
         <Switch>
           <Route exact path="/giris" component={Giris} />
+          <Protected
+            exact
+            path="/sarfmalzemegiris"
+            component={SarfMalzemeGiris}
+          />
           <Protected exact path="/malzemekodlama" component={MalzemeKodlama} />
           <Protected exact path="/birimkodlama" component={BirimKodlama} />
           <Protected exact path="/firmakarti" component={FirmaKarti} />

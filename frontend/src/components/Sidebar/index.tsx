@@ -31,9 +31,7 @@ const SideBar = () => {
       icon: "pi pi-fw pi-th-large",
       items: [
         {
-          template: () => (
-            <Link to="/sarfmalzemegiris">Sarf Malz. Giriş (düzenlenecek)</Link>
-          ),
+          template: () => <Link to="/sarfmalzemegiris">Sarf Malz. Giriş</Link>,
         },
       ],
     },
