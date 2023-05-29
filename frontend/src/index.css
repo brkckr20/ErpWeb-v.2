@@ -48,3 +48,18 @@ body,
 .p-menuitem:hover {
   background-color: #ececec;
 }
+
+.p-inputgroup-addon,
+.p-inputtext {
+  padding: 5px 6px !important;
+}
+
+.p-inputgroup-addon {
+  font-weight: bold;
+  color: #000;
+}
+
+.p-inputtext,
+.p-inputgroup-addon {
+  border-radius: 0 !important;
+}

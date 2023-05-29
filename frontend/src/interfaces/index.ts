@@ -33,3 +33,12 @@ export interface FirmaKartiInterface{
     cari_tipi: string;
     gib_mail: string;
 }
+
+export interface MalzemeGirisFis{
+    id: number | null;
+    islem_cinsi: string;
+    tarih: Date | any;
+    firma_kodu: string;
+    firma_unvan: string;
+    fatura_no: string;
+}

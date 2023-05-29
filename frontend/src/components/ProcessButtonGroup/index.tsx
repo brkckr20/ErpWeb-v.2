@@ -11,7 +11,6 @@ const ProcessButtonGroup: FC<IPGButton> = ({ kaydet }) => {
     <div>
       <div className="flex gap-1 mb-1">
         <Button
-          //ss
           icon="pi pi-plus"
           size="small"
           tooltip="Yeni"
