@@ -8,7 +8,8 @@ import { KartYonetimi } from "../Kartlar/_KartYonetimi";
 import { Toast } from "primereact/toast";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { gelenFieldIsimleriniObjectKeyiOlarakAyarla } from "../../utils/gelenFieldIsimleriniObjectKeyiOlarakAyarla";
+import { ContextMenu } from "primereact/contextmenu";
+import { Dialog as UpdateModal } from "primereact/dialog";
 
 const kartYonetimi = new KartYonetimi();
 
@@ -35,7 +36,53 @@ const FirmaKarti = () => {
   const [firmaListesi, setFirmaListesi] = useState<FirmaKartiInterface[]>([]);
   const [fieldList, setFieldList] = useState<any>([]);
 
+  const [updateVisible, setUpdateVisible] = useState<boolean>(false);
+
+  const cm = useRef<ContextMenu>(null);
+
   const toast = useRef<Toast>(null);
+
+  const [updateForm, setUpdateForm] = useState<
+    FirmaKartiInterface | null | any
+  >({
+    id: 0,
+    firma_kodu: "",
+    firma_unvan1: "",
+    adres1: "",
+    adres2: "",
+    ulke_adi: "",
+    ulke_kodu: "",
+    sehir: "",
+    ilce: "",
+    posta_kodu: "",
+    vergi_dairesi: "",
+    vergi_no: "",
+    telefon: "",
+    cari_tipi: "",
+    gib_mail: "",
+  });
+  const [secilenSatir, setSecilenSatir] = useState<FirmaKartiInterface | null>(
+    null
+  );
+
+  const menuModel = [
+    {
+      label: "Güncelle",
+      icon: "pi pi-fw pi-pencil",
+      command: () => {
+        setUpdateForm(secilenSatir);
+        setUpdateVisible(true);
+      },
+    },
+    {
+      label: "Sil",
+      icon: "pi pi-fw pi-trash",
+      command: () => {
+        // setUpdateForm(secilenSatir);
+        // sil();
+      },
+    },
+  ];
 
   const show = (data: any) => {
     toast.current?.show({
@@ -128,29 +175,86 @@ const FirmaKarti = () => {
             </div>
           </Dialog>
         </div>
-        <DataTable
-          value={firmaListesi}
-          dataKey="id"
-          emptyMessage="Gösterilecek kayıt yok"
-          size="small"
-          globalFilterFields={fieldToArray}
-          showGridlines
-          stripedRows
-          // onContextMenu={(e) => cm.current?.show(e.originalEvent)}
-          // onContextMenuSelectionChange={(e: any) =>
-          //   setSecilenSatir(e.value)
-          // }
-        >
-          {columns.map((column: any) => (
-            <Column
-              key={column.field}
-              field={column.field}
-              header={column.header}
-              filter
-              filterPlaceholder={`${column.header} a göre ara`}
-            />
-          ))}
-        </DataTable>
+        <div className="card flex justify-content-center">
+          <UpdateModal
+            header="Birim Güncelle"
+            visible={updateVisible}
+            style={{ width: "45vw" }}
+            onHide={() => setUpdateVisible(false)}
+            // footer={footerContent2}
+          >
+            <div className="card flex gap-2">
+              <div className="flex flex-column gap-2">
+                <label>Kayıt Numarası</label>
+                <InputText
+                  className="p-inputtext-sm"
+                  value={updateForm?.id?.toString()}
+                  disabled
+                />
+              </div>
+              <div className="flex flex-column gap-2">
+                <label>Birim Adı</label>
+                <InputText
+                  className="p-inputtext-sm"
+                  value={updateForm?.firma_kodu}
+                  /* onChange={(e) =>
+                    setUpdateForm({
+                      ...updateForm,
+                      ad: e.target.value,
+                    })
+                  } */
+                />
+              </div>
+              <div className="flex flex-column gap-2">
+                <label>Kısa Kod</label>
+                <InputText
+                  className="p-inputtext-sm"
+                  /* value={updateForm?.kisa_kod}
+                  onChange={(e) =>
+                    setUpdateForm({
+                      ...updateForm,
+                      kisa_kod: e.target.value,
+                    })
+                  } */
+                />
+              </div>
+              <div className="flex flex-column gap-2">
+                <label>Depo Adı</label>
+                <InputText
+                  className="p-inputtext-sm"
+                  /* value={updateForm?.depo}
+                  onChange={(e) =>
+                    setUpdateForm({ ...updateForm, depo: e.target.value })
+                  } */
+                />
+              </div>
+            </div>
+          </UpdateModal>
+        </div>
+        <div>
+          <ContextMenu model={menuModel} ref={cm} />
+          <DataTable
+            value={firmaListesi}
+            dataKey="id"
+            emptyMessage="Gösterilecek kayıt yok"
+            size="small"
+            globalFilterFields={fieldToArray}
+            showGridlines
+            stripedRows
+            onContextMenu={(e) => cm.current?.show(e.originalEvent)}
+            onContextMenuSelectionChange={(e: any) => setSecilenSatir(e.value)}
+          >
+            {columns.map((column: any) => (
+              <Column
+                key={column.field}
+                field={column.field}
+                header={column.header}
+                filter
+                filterPlaceholder={`${column.header} a göre ara`}
+              />
+            ))}
+          </DataTable>
+        </div>
       </div>
     </React.Fragment>
   );
