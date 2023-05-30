@@ -53,4 +53,15 @@ router.put('/', async (req: Request, res: Response) => {
    
 })
 
+router.delete("/:id", async (req: Request, res: Response) => {
+    const id = Number(req.params.id);
+    const result = await appDataSource.createQueryBuilder().delete().from(FirmaKarti).where("id = :id", { id: id }).execute();
+    if (result.affected == 1) {
+        res.json({
+            status: "warn",
+            mesaj: `${id} numaralı kayıt başarıyla silindi`,
+        } as DurumMesajlari);
+    }
+})
+
 export default router;

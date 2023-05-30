@@ -23,4 +23,9 @@ export class KartYonetimi{
         const response = await axios.put(`${BASE_URL}/${baseRoute}/${kartAdi}`,veri);
         return response.data;
     }
+
+    async kartSil(kartAdi: string, id: any) {
+        const response = await axios.delete(`${BASE_URL}/${baseRoute}/${kartAdi}/${id}`);
+        return response.data;
+    }
 }

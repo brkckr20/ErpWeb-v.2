@@ -2,14 +2,18 @@ import React from "react";
 import { Button } from "primereact/button";
 
 interface IUpdateFooterProps {
-  handleUpdate: () => void;
+  handleUpdate?: () => void;
+  label: string;
 }
 
-const UpdateFooter: React.FC<IUpdateFooterProps> = ({ handleUpdate }) => {
+const UpdateFooter: React.FC<IUpdateFooterProps> = ({
+  handleUpdate,
+  label = "Güncelle",
+}) => {
   return (
     <div>
       <Button
-        label="Güncelle"
+        label={label}
         icon="pi pi-check"
         onClick={handleUpdate}
         autoFocus

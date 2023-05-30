@@ -10,6 +10,8 @@ interface IInputText {
   value?: string | number | any;
   name?: string;
   disabled?: boolean;
+  openModalName?: "firma";
+  onClick?: () => void;
 }
 
 const InputGroups: FC<IInputText> = ({
@@ -19,6 +21,7 @@ const InputGroups: FC<IInputText> = ({
   name,
   onChange,
   disabled,
+  onClick,
 }) => {
   return (
     <div className="">
@@ -38,6 +41,7 @@ const InputGroups: FC<IInputText> = ({
             severity="secondary"
             icon="pi pi-ellipsis-v"
             className="p-0"
+            onClick={onClick}
           />
         )}
       </div>

@@ -3,6 +3,8 @@ import Date from "../../components/Inputs/Date";
 import InputGroups from "../../components/Inputs/InputGroups";
 import ProcessButtonGroup from "../../components/ProcessButtonGroup";
 import { MalzemeGirisFis } from "../../interfaces";
+import { Dialog } from "primereact/dialog";
+import UpdateFooter from "../../components/Modal/UpdateFooter";
 
 const Giris = () => {
   const initialValues: MalzemeGirisFis = {
@@ -15,6 +17,7 @@ const Giris = () => {
   };
 
   const [saveForm, setSaveForm] = useState<MalzemeGirisFis>(initialValues);
+  const [visible, setVisible] = useState(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSaveForm((prevValue) => ({
@@ -44,6 +47,8 @@ const Giris = () => {
             value={saveForm.firma_kodu}
             onChange={handleInputChange}
             name="firma_kodu"
+            openModalName="firma"
+            onClick={() => setVisible(true)}
           />
         </div>
         <div className="flex flex-column  w-full">
@@ -68,6 +73,23 @@ const Giris = () => {
           />
         </div>
       </div>
+      <Dialog
+        header="Header"
+        visible={visible}
+        style={{ width: "50vw" }}
+        onHide={() => setVisible(false)}
+        footer={<UpdateFooter label="Tamam" />}
+      >
+        <p className="m-0">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </Dialog>
     </div>
   );
 };

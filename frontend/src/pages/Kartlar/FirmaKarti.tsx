@@ -82,8 +82,8 @@ const FirmaKarti = () => {
       label: "Sil",
       icon: "pi pi-fw pi-trash",
       command: () => {
-        // setUpdateForm(secilenSatir);
-        // sil();
+        setUpdateForm(secilenSatir);
+        sil();
       },
     },
   ];
@@ -113,6 +113,7 @@ const FirmaKarti = () => {
       setVisible(false);
       show(data);
       setSaveForm(initialValues);
+      setUpdateTable(!updateTable);
     });
   };
 
@@ -120,7 +121,14 @@ const FirmaKarti = () => {
     kartYonetimi.kartGuncelle("firmakarti", updateForm).then((data) => {
       setUpdateVisible(false);
       show(data);
-      setUpdateTable(true);
+      setUpdateTable(!updateTable);
+    });
+  };
+
+  const sil = () => {
+    kartYonetimi.kartSil("firmakarti", secilenSatir?.id).then((data) => {
+      show(data);
+      setUpdateTable(!updateTable);
     });
   };
 

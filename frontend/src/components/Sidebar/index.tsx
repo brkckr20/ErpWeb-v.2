@@ -41,7 +41,7 @@ const SideBar = () => {
     <div className={styles.sidebar}>
       <div>
         <h1 className={styles.logo}>
-          <Link to="/">Portal</Link>
+          <Link to="/">Portal v.2.0</Link>
         </h1>
       </div>
       <div className="card flex justify-content-center p-1 h-auto">
