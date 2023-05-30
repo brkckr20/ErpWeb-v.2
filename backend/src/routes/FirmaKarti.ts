@@ -13,6 +13,13 @@ router.get("/", async (req:Request,res:Response) => {
     res.json(firmalar);
 })
 
+router.get("/:id", async (req: Request, res: Response) => {
+    const firma = await appDataSource.getRepository(FirmaKarti).findOneBy({ id: Number(req.params.id) });
+    if (firma) {
+        const { created_at,updated_at, ...data } = firma;
+        res.json(data);
+    }
+})
 
 router.post('/', async (req: Request, res: Response) => {
     const birim = await appDataSource.getRepository(FirmaKarti).create(req.body);
@@ -22,5 +29,18 @@ router.post('/', async (req: Request, res: Response) => {
         mesaj : "Kayıt işlemi başarılı"
     } as DurumMesajlari);
 })
+
+router.put('/', async (req: Request, res: Response) => {
+    // const birim = await appDataSource.getRepository(FirmaKarti).create(req.body);
+    // const result = await appDataSource.getRepository(FirmaKarti).save(birim);
+    // res.send({
+    //     status: "success",
+    //     mesaj : "Kayıt işlemi başarılı"
+    // } as DurumMesajlari);
+})
+
+
+
+
 
 export default router;

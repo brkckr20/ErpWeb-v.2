@@ -10,6 +10,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { ContextMenu } from "primereact/contextmenu";
 import { Dialog as UpdateModal } from "primereact/dialog";
+import UpdateFooter from "../../components/Modal/UpdateFooter";
 
 const kartYonetimi = new KartYonetimi();
 
@@ -70,8 +71,11 @@ const FirmaKarti = () => {
       label: "Güncelle",
       icon: "pi pi-fw pi-pencil",
       command: () => {
-        setUpdateForm(secilenSatir);
         setUpdateVisible(true);
+        kartYonetimi
+          .idyeGoreKartGetir("firmakarti", secilenSatir?.id)
+          .then((data) => setUpdateForm(data));
+        console.log(updateForm);
       },
     },
     {
@@ -110,6 +114,10 @@ const FirmaKarti = () => {
       show(data);
       setSaveForm(initialValues);
     });
+  };
+
+  const guncelle = () => {
+    kartYonetimi.kartGuncelle("firmakarti", updateForm);
   };
 
   const footerContent = (
@@ -177,57 +185,26 @@ const FirmaKarti = () => {
         </div>
         <div className="card flex justify-content-center">
           <UpdateModal
-            header="Birim Güncelle"
+            header="Firma Güncelle"
             visible={updateVisible}
-            style={{ width: "45vw" }}
+            style={{ width: "40vw" }}
             onHide={() => setUpdateVisible(false)}
-            // footer={footerContent2}
+            footer={<UpdateFooter handleUpdate={guncelle} />}
           >
-            <div className="card flex gap-2">
-              <div className="flex flex-column gap-2">
-                <label>Kayıt Numarası</label>
-                <InputText
-                  className="p-inputtext-sm"
-                  value={updateForm?.id?.toString()}
-                  disabled
-                />
-              </div>
-              <div className="flex flex-column gap-2">
-                <label>Birim Adı</label>
-                <InputText
-                  className="p-inputtext-sm"
-                  value={updateForm?.firma_kodu}
-                  /* onChange={(e) =>
-                    setUpdateForm({
-                      ...updateForm,
-                      ad: e.target.value,
-                    })
-                  } */
-                />
-              </div>
-              <div className="flex flex-column gap-2">
-                <label>Kısa Kod</label>
-                <InputText
-                  className="p-inputtext-sm"
-                  /* value={updateForm?.kisa_kod}
-                  onChange={(e) =>
-                    setUpdateForm({
-                      ...updateForm,
-                      kisa_kod: e.target.value,
-                    })
-                  } */
-                />
-              </div>
-              <div className="flex flex-column gap-2">
-                <label>Depo Adı</label>
-                <InputText
-                  className="p-inputtext-sm"
-                  /* value={updateForm?.depo}
-                  onChange={(e) =>
-                    setUpdateForm({ ...updateForm, depo: e.target.value })
-                  } */
-                />
-              </div>
+            <div className="card flex flex-wrap gap-2">
+              {Object.entries(updateForm).map(([key, value]) => (
+                <div className="flex flex-column gap-2" key={key}>
+                  <label>{key}</label>
+                  <InputText
+                    className="p-inputtext-sm"
+                    value={value as any}
+                    disabled={key === "id"}
+                    onChange={(e) =>
+                      setUpdateForm({ ...updateForm, [key]: e.target.value })
+                    }
+                  />
+                </div>
+              ))}
             </div>
           </UpdateModal>
         </div>
