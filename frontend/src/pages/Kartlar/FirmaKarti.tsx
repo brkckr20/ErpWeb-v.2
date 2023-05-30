@@ -36,6 +36,7 @@ const FirmaKarti = () => {
   const [saveForm, setSaveForm] = useState<FirmaKartiInterface>(initialValues);
   const [firmaListesi, setFirmaListesi] = useState<FirmaKartiInterface[]>([]);
   const [fieldList, setFieldList] = useState<any>([]);
+  const [updateTable, setUpdateTable] = useState(false);
 
   const [updateVisible, setUpdateVisible] = useState<boolean>(false);
 
@@ -75,7 +76,6 @@ const FirmaKarti = () => {
         kartYonetimi
           .idyeGoreKartGetir("firmakarti", secilenSatir?.id)
           .then((data) => setUpdateForm(data));
-        console.log(updateForm);
       },
     },
     {
@@ -117,7 +117,11 @@ const FirmaKarti = () => {
   };
 
   const guncelle = () => {
-    kartYonetimi.kartGuncelle("firmakarti", updateForm);
+    kartYonetimi.kartGuncelle("firmakarti", updateForm).then((data) => {
+      setUpdateVisible(false);
+      show(data);
+      setUpdateTable(true);
+    });
   };
 
   const footerContent = (
@@ -144,7 +148,7 @@ const FirmaKarti = () => {
       setFirmaListesi(data);
       setFieldList(Object.keys(data[0]));
     });
-  }, []);
+  }, [updateTable]);
 
   return (
     <React.Fragment>
