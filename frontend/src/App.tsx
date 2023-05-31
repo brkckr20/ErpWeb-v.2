@@ -10,7 +10,17 @@ import BirimKodlama from "./pages/Kodlama/BirimKodlama";
 import FirmaKarti from "./pages/Kartlar/FirmaKarti";
 import SarfMalzemeGiris from "./pages/SarfMalzeme/Giris";
 
+import { useEffect } from "react";
+
 function App() {
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // localStorage'dan token'ı al
+
+    // Tarayıcı yenilendiyse ve token varsa, token'ı tekrar localStorage'a ekle
+    if (performance.navigation.type === 1 && token) {
+      localStorage.setItem("token", token);
+    }
+  }, []);
   const { pathname } = useLocation();
   return (
     <div className={styles.container}>
