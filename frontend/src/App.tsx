@@ -38,6 +38,18 @@ function App() {
           <Protected exact path="/firmakarti" component={FirmaKarti} />
           <Protected exact path="/" component={Anasayfa} />
         </Switch>
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            backgroundColor: "red",
+            width: "calc(100% - 250.5px)",
+            color: "white",
+            padding: "0 4px",
+          }}
+        >
+          tabbed menu olacak
+        </div>
       </div>
     </div>
   );
