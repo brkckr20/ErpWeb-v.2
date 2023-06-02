@@ -63,3 +63,7 @@ body,
 .p-inputgroup-addon {
   border-radius: 0 !important;
 }
+
+#fis .p-datatable.p-datatable-sm .p-datatable-tbody>tr>td {
+  padding: 0;
+}

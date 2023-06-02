@@ -1,7 +1,6 @@
 import { ChangeEvent, FC } from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import "./Input.css";
 
 interface IInputText {
   label: string;
@@ -24,7 +23,7 @@ const InputGroups: FC<IInputText> = ({
   onClick,
 }) => {
   return (
-    <div className="">
+    <div>
       <div className="p-inputgroup">
         <span className="p-inputgroup-addon w-12rem justify-content-start">
           {label}

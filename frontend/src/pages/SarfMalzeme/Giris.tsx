@@ -2,14 +2,19 @@ import { useState, ChangeEvent } from "react";
 import Date from "../../components/Inputs/Date";
 import InputGroups from "../../components/Inputs/InputGroups";
 import ProcessButtonGroup from "../../components/ProcessButtonGroup";
-import { MalzemeGirisFis } from "../../interfaces";
+import { MalzemeGirisFis, MalzemeGirisKalem } from "../../interfaces";
 import { Dialog } from "primereact/dialog";
 import UpdateFooter from "../../components/Modal/UpdateFooter";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { CRUDManager } from "../../features/CRUDManager";
+import { OnlyInput } from "../../components/Inputs/OnlyInput";
+import InputSelectBox from "../../components/Inputs/InputSelectBox";
 
 const Giris = () => {
+  const manager = new CRUDManager("sarfmalzemedepo");
+
   const initialValues: MalzemeGirisFis = {
     id: null,
     islem_cinsi: "SARF_MALZEME_GIRIS",
@@ -17,34 +22,35 @@ const Giris = () => {
     firma_kodu: "",
     firma_unvan: "",
     fatura_no: "",
+    kalem: [],
   };
 
   const [saveForm, setSaveForm] = useState<MalzemeGirisFis>(initialValues);
   const [visible, setVisible] = useState(false);
-  const [products, setProducts] = useState<Product[]>([
+  const [kalem, setKalem] = useState<MalzemeGirisKalem[]>([
     {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5,
+      id: "1",
+      kalem_islem: "TAMİR GİRİŞ",
+      birim: "ADET",
+      malzeme_adi: "TONER",
+      malzeme_kodu: "TNR1",
+      miktar: 1,
     },
     {
-      id: "1001",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5,
+      id: "2",
+      kalem_islem: "TAMİR GİRİŞ",
+      birim: "ADET",
+      malzeme_adi: "TONER",
+      malzeme_kodu: "TNR2",
+      miktar: 1,
+    },
+    {
+      id: "3",
+      kalem_islem: "TAMİR GİRİŞ",
+      birim: "ADET",
+      malzeme_adi: "TONER",
+      malzeme_kodu: "TNR2",
+      miktar: 1,
     },
   ]);
 
@@ -55,22 +61,14 @@ const Giris = () => {
     }));
   };
 
-  interface Product {
-    id: string;
-    code: string;
-    name: string;
-    description: string;
-    image: string;
-    price: number;
-    category: string;
-    quantity: number;
-    inventoryStatus: string;
-    rating: number;
-  }
+  const changeDate = (e: any) => {
+    setSaveForm({ ...saveForm, tarih: e.value });
+  };
 
   const handleSave = () => {
-    alert();
+    manager.create(saveForm).then((data) => console.log(data));
   };
+
   return (
     <div className="w-full flex flex-column h-full surface-200 p-1">
       <ProcessButtonGroup kaydet={handleSave} />
@@ -83,7 +81,7 @@ const Giris = () => {
             name="islem_cinsi"
             disabled
           />
-          <Date />
+          <Date date={saveForm.tarih} setDate={changeDate} />
           <InputGroups
             label="Firma Kodu"
             filtered={true}
@@ -94,7 +92,7 @@ const Giris = () => {
             onClick={() => setVisible(true)}
           />
         </div>
-        <div className="flex flex-column  w-full">
+        <div className="flex flex-column w-full">
           <InputGroups
             label="Firma Unvan"
             value={saveForm.firma_unvan}
@@ -145,18 +143,47 @@ const Giris = () => {
             tooltipOptions={{ position: "right" }}
           />
         </div>
-        <div className="w-full bg-black-alpha-30">
+        <div id="fis" className="w-full bg-black-alpha-30 overflow-x-auto">
           <DataTable
-            value={products}
+            value={kalem}
             size="small"
             tableStyle={{ minWidth: "50rem" }}
           >
-            <Column field="id" header="ID"></Column>
-            <Column field="id" header="ID"></Column>
-            <Column field="id" header="ID"></Column>
-            <Column field="id" header="ID"></Column>
-            <Column field="id" header="ID"></Column>
-            <Column field="code" header="Code"></Column>
+            <Column
+              field="kalem_islem"
+              header="Kalem İşlem"
+              body={<InputSelectBox type="kalem_islem" />}
+            />
+            <Column
+              field="malzeme_kodu"
+              header="Malzeme Kodu"
+              body={(rowData) => (
+                <OnlyInput disabled={true} value={rowData.malzeme_kodu} />
+              )}
+            />
+            <Column
+              field="malzeme_kodu"
+              header="Malzeme Adı"
+              body={<OnlyInput disabled={true} />}
+            ></Column>
+            <Column
+              field="miktar"
+              header="Miktar"
+              body={(rowData) => (
+                <OnlyInput
+                  value={rowData.miktar}
+                  onChange={(e: any) => {
+                    console.log(rowData);
+                  }}
+                />
+              )}
+            ></Column>
+            <Column
+              field="birim"
+              header="Birim"
+              body={<InputSelectBox type="birim" />}
+            ></Column>
+            <Column field="not1" header="Not 1" body={<OnlyInput />}></Column>
           </DataTable>
         </div>
       </div>

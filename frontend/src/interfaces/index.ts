@@ -41,4 +41,20 @@ export interface MalzemeGirisFis{
     firma_kodu: string;
     firma_unvan: string;
     fatura_no: string;
+    kalem : MalzemeGirisKalem[]
+}
+
+export interface MalzemeGirisKalem{
+    id: number | string | null;
+    kalem_islem: string;
+    malzeme_kodu: string;
+    malzeme_adi: string;
+    miktar: number | string;
+    not1?: string;
+    not2?: string;
+    birim: string;
+    cikilan_birim?: string;
+    teslim_alan?: string;
+    takip_no?: string;
+    refNoId?: number;
 }
