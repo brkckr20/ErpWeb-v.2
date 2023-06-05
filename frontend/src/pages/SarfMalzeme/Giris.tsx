@@ -27,32 +27,7 @@ const Giris = () => {
 
   const [saveForm, setSaveForm] = useState<MalzemeGirisFis>(initialValues);
   const [visible, setVisible] = useState(false);
-  const [kalem, setKalem] = useState<MalzemeGirisKalem[]>([
-    {
-      id: "1",
-      kalem_islem: "TAMİR GİRİŞ",
-      birim: "ADET",
-      malzeme_adi: "TONER",
-      malzeme_kodu: "TNR1",
-      miktar: 1,
-    },
-    {
-      id: "2",
-      kalem_islem: "TAMİR GİRİŞ",
-      birim: "ADET",
-      malzeme_adi: "TONER",
-      malzeme_kodu: "TNR2",
-      miktar: 1,
-    },
-    {
-      id: "3",
-      kalem_islem: "TAMİR GİRİŞ",
-      birim: "ADET",
-      malzeme_adi: "TONER",
-      malzeme_kodu: "TNR2",
-      miktar: 1,
-    },
-  ]);
+  const [kalem, setKalem] = useState<MalzemeGirisKalem[]>([]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSaveForm((prevValue) => ({
@@ -67,6 +42,21 @@ const Giris = () => {
 
   const handleSave = () => {
     manager.create(saveForm).then((data) => console.log(data));
+  };
+
+  const addNewLine = () => {
+    setKalem([
+      ...kalem,
+      {
+        id: "3",
+        kalem_islem: "TAMİR GİRİŞ",
+        birim: "ADET",
+        malzeme_adi: "TONER",
+        malzeme_kodu: "TNR2",
+        miktar: 1,
+        key: Number(kalem.length + 1),
+      },
+    ]);
   };
 
   return (
@@ -141,6 +131,7 @@ const Giris = () => {
             size="small"
             tooltip="Yeni satır"
             tooltipOptions={{ position: "right" }}
+            onClick={addNewLine}
           />
         </div>
         <div id="fis" className="w-full bg-black-alpha-30 overflow-x-auto">
@@ -148,6 +139,7 @@ const Giris = () => {
             value={kalem}
             size="small"
             tableStyle={{ minWidth: "50rem" }}
+            emptyMessage="Kayıt yok"
           >
             <Column
               field="kalem_islem"
@@ -157,9 +149,7 @@ const Giris = () => {
             <Column
               field="malzeme_kodu"
               header="Malzeme Kodu"
-              body={(rowData) => (
-                <OnlyInput disabled={true} value={rowData.malzeme_kodu} />
-              )}
+              body={(rowData) => <OnlyInput value={rowData.malzeme_kodu} />}
             />
             <Column
               field="malzeme_kodu"
@@ -187,7 +177,7 @@ const Giris = () => {
           </DataTable>
         </div>
       </div>
-      <div className="flex-1">havuz alani olacak</div>
+      {/* <div className="flex-1">havuz alani olacak</div> */}
     </div>
   );
 };

@@ -57,4 +57,5 @@ export interface MalzemeGirisKalem{
     teslim_alan?: string;
     takip_no?: string;
     refNoId?: number;
+    key?:number
 }
