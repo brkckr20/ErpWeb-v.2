@@ -49,10 +49,10 @@ const Giris = () => {
       ...kalem,
       {
         id: "3",
-        kalem_islem: "TAMİR GİRİŞ",
-        birim: "ADET",
-        malzeme_adi: "TONER",
-        malzeme_kodu: "TNR2",
+        kalem_islem: "",
+        birim: "",
+        malzeme_adi: "",
+        malzeme_kodu: "",
         miktar: 1,
         key: Number(kalem.length + 1),
       },
@@ -162,7 +162,7 @@ const Giris = () => {
               body={(rowData) => (
                 <OnlyInput
                   value={rowData.miktar}
-                  onChange={(e: any) => {
+                  onChange={() => {
                     console.log(rowData);
                   }}
                 />

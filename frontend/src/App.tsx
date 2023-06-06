@@ -12,7 +12,12 @@ import SarfMalzemeGiris from "./pages/SarfMalzeme/Giris";
 
 import { useEffect } from "react";
 
+import { useAppSelector } from "./contexts/store";
+
 function App() {
+  const menuList = useAppSelector((state) => state.openMenu);
+  console.log(menuList);
+
   useEffect(() => {
     const token = localStorage.getItem("token"); // localStorage'dan token'ı al
 
@@ -42,13 +47,22 @@ function App() {
           style={{
             position: "absolute",
             bottom: 0,
-            backgroundColor: "red",
+            backgroundColor: "rgba(0,0,0,0.4)",
             width: "calc(100% - 250.5px)",
             color: "white",
             padding: "0 4px",
           }}
         >
-          tabbed menu olacak
+          {menuList.length > 0 &&
+            menuList.map((item) => (
+              <div
+                key={item.key}
+                className="inline-block bg-black-alpha-80 p-1 m-1 border-round"
+              >
+                <label className="mx-1">{item.name}</label>
+                <button className="mx-1 px-1 cursor-pointer">X</button>
+              </div>
+            ))}
         </div>
       </div>
     </div>
