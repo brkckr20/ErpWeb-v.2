@@ -1,28 +1,28 @@
-import React, { ChangeEventHandler, FC } from "react";
-import { InputText } from "primereact/inputtext";
+import { FC } from "react";
+import { Input, InputNumber } from "antd";
 
-interface IOnlyInputProps {
-  rowData?: any;
-  column?: any;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+interface IProps {
   disabled?: boolean;
-  value?: string;
+  type?: "text" | "number";
 }
 
-const OnlyInput: FC<IOnlyInputProps> = ({
-  disabled = false,
-  value,
-  onChange,
-}) => {
-  return (
-    <InputText
-      type="text"
-      value={value}
-      onChange={onChange}
-      className="p-inputtext-sm w-full"
-      disabled={disabled}
-    />
-  );
+const OnlyInput: FC<IProps> = ({ type = "text", disabled = false }) => {
+  switch (type) {
+    case "text":
+      return <Input size="small" disabled={disabled} type={type} />;
+    case "number":
+      return (
+        <InputNumber
+          size="small"
+          defaultValue={0}
+          formatter={(value: any) => {
+            const formattedValue = parseFloat(value).toFixed(2);
+            return `${formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+          }}
+        />
+      );
+  }
+  // return <Input size="small" disabled={disabled} type={type} />;
 };
 
 export { OnlyInput };

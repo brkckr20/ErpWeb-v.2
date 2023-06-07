@@ -1,46 +1,37 @@
-import { FC, useState } from "react";
-import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
-
-interface IslemCinsi {
-  name: string;
-}
-
-interface IBirim {
-  name: string;
-}
+import { FC } from "react";
+import { Select } from "antd";
 
 interface IProps {
-  type?: "birim" | "kalem_islem";
+  options: OptionValue[];
 }
 
-const InputSelectBox: FC<IProps> = ({ type }) => {
-  const [selected, setSelected] = useState<IslemCinsi | null>(null);
+interface OptionValue {
+  value: string;
+  label: string;
+}
 
-  const islemCinsi: IslemCinsi[] = [
-    { name: "MALZEME GİRİŞ" },
-    { name: "TAMİR GİRİŞ" },
-  ];
+const InputSelectBox: FC<IProps> = ({ options }) => {
+  const onChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
 
-  const birim: IBirim[] = [{ name: "ADET" }, { name: "METRE" }];
-
-  const optionType = () => {
-    switch (type) {
-      case "birim":
-        return birim;
-      case "kalem_islem":
-        return islemCinsi;
-      default:
-        return birim;
-    }
+  const onSearch = (value: string) => {
+    console.log("search:", value);
   };
 
   return (
-    <Dropdown
-      value={selected}
-      onChange={(e: DropdownChangeEvent) => setSelected(e.value)}
-      options={optionType()}
-      optionLabel="name"
+    <Select
+      showSearch
+      size="small"
+      placeholder="Kalem İşlem"
+      optionFilterProp="children"
+      onChange={onChange}
+      onSearch={onSearch}
+      filterOption={(input, option) =>
+        (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+      }
       className="w-full"
+      options={options}
     />
   );
 };

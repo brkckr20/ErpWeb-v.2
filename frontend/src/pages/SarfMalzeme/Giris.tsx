@@ -5,12 +5,15 @@ import ProcessButtonGroup from "../../components/ProcessButtonGroup";
 import { MalzemeGirisFis, MalzemeGirisKalem } from "../../interfaces";
 import { Dialog } from "primereact/dialog";
 import UpdateFooter from "../../components/Modal/UpdateFooter";
-import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { CRUDManager } from "../../features/CRUDManager";
-import { OnlyInput } from "../../components/Inputs/OnlyInput";
 import InputSelectBox from "../../components/Inputs/InputSelectBox";
+import OnlyInputWithButton from "../../components/Inputs/OnlyInputWithButton";
+import { PlusOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import { OnlyInput } from "../../components/Inputs/OnlyInput";
+import AntModal from "../../components/Modal/AntModal";
 
 const Giris = () => {
   const manager = new CRUDManager("sarfmalzemedepo");
@@ -28,6 +31,8 @@ const Giris = () => {
   const [saveForm, setSaveForm] = useState<MalzemeGirisFis>(initialValues);
   const [visible, setVisible] = useState(false);
   const [kalem, setKalem] = useState<MalzemeGirisKalem[]>([]);
+
+  const [mKoduModal, setMKoduModal] = useState(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSaveForm((prevValue) => ({
@@ -124,56 +129,72 @@ const Giris = () => {
       <div className="flex-1 flex w-full mt-1">
         <div className="mr-1 flex flex-column">
           <Button
-            icon="pi pi-plus"
-            rounded
-            outlined
-            severity="success"
-            size="small"
-            tooltip="Yeni satır"
-            tooltipOptions={{ position: "right" }}
+            type="primary"
+            shape="circle"
             onClick={addNewLine}
+            icon={<PlusOutlined />}
           />
         </div>
         <div id="fis" className="w-full bg-black-alpha-30 overflow-x-auto">
+          <AntModal
+            title="Malzeme Kodu"
+            open={mKoduModal}
+            handleModal={() => setMKoduModal(false)}
+          >
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Repellendus sint suscipit sequi aliquid laborum est perspiciatis
+              ex in sit hic?
+            </div>
+          </AntModal>
           <DataTable
             value={kalem}
             size="small"
             tableStyle={{ minWidth: "50rem" }}
-            emptyMessage="Kayıt yok"
+            emptyMessage="Devam etmek için + butonuna tıklayarak yeni kayıt ekleyebilirsiniz!"
           >
             <Column
               field="kalem_islem"
               header="Kalem İşlem"
-              body={<InputSelectBox type="kalem_islem" />}
+              body={(rowData) => (
+                <InputSelectBox
+                  options={[{ label: "MALZEME", value: "malzeme" }]}
+                />
+              )}
             />
             <Column
               field="malzeme_kodu"
               header="Malzeme Kodu"
-              body={(rowData) => <OnlyInput value={rowData.malzeme_kodu} />}
+              body={(rowData) => (
+                <OnlyInputWithButton
+                  onButtonHandle={() => setMKoduModal(true)}
+                />
+              )}
             />
             <Column
-              field="malzeme_kodu"
+              field="malzeme_adi"
               header="Malzeme Adı"
-              body={<OnlyInput disabled={true} />}
+              body={(rowData) => <OnlyInput disabled={true} />}
             ></Column>
             <Column
               field="miktar"
               header="Miktar"
-              body={(rowData) => (
-                <OnlyInput
-                  value={rowData.miktar}
-                  onChange={() => {
-                    console.log(rowData);
-                  }}
-                />
-              )}
+              body={(rowData) => <OnlyInput type="number" />}
             ></Column>
             <Column
               field="birim"
               header="Birim"
-              body={<InputSelectBox type="birim" />}
+              body={(rowData) => (
+                <InputSelectBox
+                  options={[{ label: "GİRİŞ", value: "giris" }]}
+                />
+              )}
             ></Column>
-            <Column field="not1" header="Not 1" body={<OnlyInput />}></Column>
+            <Column
+              field="not1"
+              header="Not 1"
+              body={(rowData) => <OnlyInput />}
+            ></Column>
           </DataTable>
         </div>
       </div>
