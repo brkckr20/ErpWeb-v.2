@@ -14,6 +14,8 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { OnlyInput } from "../../components/Inputs/OnlyInput";
 import AntModal from "../../components/Modal/AntModal";
+import ModalTable from "../../components/Modal/ModalTable";
+import { getFieldLabel } from "../../utils/getFieldLabel";
 
 const Giris = () => {
   const manager = new CRUDManager("sarfmalzemedepo");
@@ -33,6 +35,9 @@ const Giris = () => {
   const [kalem, setKalem] = useState<MalzemeGirisKalem[]>([]);
 
   const [mKoduModal, setMKoduModal] = useState(false);
+  const [cardList, setCardList] = useState<any[]>([]);
+
+  const [columns, setColumns] = useState<any[]>([]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSaveForm((prevValue) => ({
@@ -141,17 +146,13 @@ const Giris = () => {
             open={mKoduModal}
             handleModal={() => setMKoduModal(false)}
           >
-            <div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Repellendus sint suscipit sequi aliquid laborum est perspiciatis
-              ex in sit hic?
-            </div>
+            <ModalTable columns={columns} data={cardList} />
           </AntModal>
           <DataTable
             value={kalem}
             size="small"
             tableStyle={{ minWidth: "50rem" }}
-            emptyMessage="Devam etmek için + butonuna tıklayarak yeni kayıt ekleyebilirsiniz!"
+            emptyMessage="Kayıt girmek için + butonuna tıklayarak yeni kayıt ekleyebilirsiniz!"
           >
             <Column
               field="kalem_islem"
@@ -167,7 +168,28 @@ const Giris = () => {
               header="Malzeme Kodu"
               body={(rowData) => (
                 <OnlyInputWithButton
-                  onButtonHandle={() => setMKoduModal(true)}
+                  onButtonHandle={() => {
+                    setMKoduModal(true);
+                    manager
+                      .getCards("kartlar", "firmakarti")
+                      .then((data: any[]) => {
+                        const filteredData = data.map(
+                          ({ id, firma_kodu, firma_unvan1 }) => ({
+                            id,
+                            firma_kodu,
+                            firma_unvan1,
+                          })
+                        );
+                        setCardList(filteredData);
+                        const filteredColumns = Object.keys(cardList[0]).map(
+                          (key) => ({
+                            title: getFieldLabel(key),
+                            dataIndex: key,
+                          })
+                        );
+                        setColumns(filteredColumns);
+                      });
+                  }}
                 />
               )}
             />

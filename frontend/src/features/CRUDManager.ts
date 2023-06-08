@@ -13,4 +13,9 @@ export class CRUDManager<T> {
         const response = await axios.post(`${BASE_URL}/depo/${this.depoAdi}`, data);
         return response.data;
     }
+
+    async getCards(kayitYeri:string, kayitAdi:string) {
+        const response = await axios.get(`${BASE_URL}/${kayitYeri}/${kayitAdi}`,);
+        return response.data;
+    }
 }
