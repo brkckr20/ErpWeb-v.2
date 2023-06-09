@@ -16,7 +16,6 @@ import { useAppSelector } from "./contexts/store";
 
 function App() {
   const menuList = useAppSelector((state) => state.openMenu);
-  console.log(menuList);
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // localStorage'dan token'ı al
