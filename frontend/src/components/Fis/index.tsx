@@ -20,7 +20,13 @@ const Fis: React.FC<IProps> = ({ fisItems }) => {
           key={i}
         >
           {groupItems.map((item, index) => (
-            <AntInput key={index} labelName={item.labelName} type={item.type} />
+            <AntInput
+              disabled={item.disabled}
+              key={index}
+              labelName={item.labelName}
+              type={item.type}
+              onClick={item.onClick}
+            />
           ))}
         </div>
       );

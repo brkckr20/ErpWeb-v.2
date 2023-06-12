@@ -42,7 +42,7 @@ function App() {
           <Protected exact path="/firmakarti" component={FirmaKarti} />
           <Protected exact path="/" component={Anasayfa} />
         </Switch>
-        <div
+        {/* <div
           style={{
             position: "absolute",
             bottom: 0,
@@ -62,7 +62,7 @@ function App() {
                 <button className="mx-1 px-1 cursor-pointer">X</button>
               </div>
             ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
