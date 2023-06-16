@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Fis from "../../components/Fis";
 import ProcessButtonGroup from "../../components/ProcessButtonGroup";
-import { CRUDManager } from "../../features/CRUDManager";
-import { Button, Tooltip } from "antd";
+import { Button, Table, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import type { InputRef } from "antd";
+
 import AntModal from "../../components/Modal/AntModal";
+import AntTables from "../../components/Tables/AntTables";
+import { CRUDManager } from "../../features/CRUDManager";
+import { ListSettings } from "../../features/ListSettings";
 
 export interface IFisItem {
   labelName?: string;
@@ -15,7 +19,9 @@ export interface IFisItem {
 
 const Giris = () => {
   const [cariModalOpen, setCariModalOpen] = useState(false);
-  // const manager = new CRUDManager("sarfmalzemedepo");
+  const [cariList, setCariList] = useState([]);
+  const manager = new CRUDManager("sarfmalzemedepo");
+  const listSettings = new ListSettings();
 
   const fisItems: IFisItem[] = [
     {
@@ -46,6 +52,43 @@ const Giris = () => {
     },
   ];
 
+  const yeniSatirEkle = () => {
+    alert();
+  };
+
+  useEffect(() => {
+    manager.getCards("kartlar", "firmakarti").then((data) => setCariList(data));
+    listSettings.getCompanyCodeAndName(cariList);
+  }, []);
+
+  const dataSource = [
+    {
+      key: "1",
+      name: "Mike",
+      age: 32,
+      address: "10 Downing Street",
+    },
+    {
+      key: "2",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+  ];
+
+  const columns = [
+    {
+      title: "Firma Kodu",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Firma Adı",
+      dataIndex: "age",
+      key: "age",
+    },
+  ];
+
   return (
     <div className="w-full flex flex-column h-full surface-200 p-1">
       <ProcessButtonGroup
@@ -60,10 +103,15 @@ const Giris = () => {
         <div className="flex-1 flex">
           <div>
             <Tooltip title="Yeni satır ekle">
-              <Button type="primary" shape="circle" icon={<PlusOutlined />} />
+              <Button
+                onClick={yeniSatirEkle}
+                type="primary"
+                shape="circle"
+                icon={<PlusOutlined />}
+              />
             </Tooltip>
           </div>
-          <div className="flex-1">2</div>
+          <div className="flex-1 ml-1">{/* <AntTables /> */}</div>
         </div>
         {/* <div className="flex-1">varsa havuz</div> */}
       </div>
@@ -72,7 +120,7 @@ const Giris = () => {
         title="Firma Listesi"
         handleModal={() => setCariModalOpen(false)}
       >
-        <h1>lorem ipsum</h1>
+        <Table dataSource={dataSource} columns={columns} size="small" />;
       </AntModal>
     </div>
   );

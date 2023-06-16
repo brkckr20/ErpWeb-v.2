@@ -6,6 +6,7 @@ interface IProps {
   title?: string;
   open?: boolean;
   handleModal?: () => void;
+  list?: any[];
 }
 
 const AntModal: React.FC<IProps> = ({
@@ -13,6 +14,7 @@ const AntModal: React.FC<IProps> = ({
   children,
   open,
   handleModal,
+  list,
 }) => {
   return (
     <Modal
@@ -23,6 +25,7 @@ const AntModal: React.FC<IProps> = ({
       okText="Tamam"
       onCancel={handleModal}
       cancelText="İptal"
+      width={720}
     >
       {children}
     </Modal>
