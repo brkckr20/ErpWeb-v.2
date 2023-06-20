@@ -12,6 +12,7 @@ interface IProps {
   labelName?: string | any;
   disabled?: boolean;
   onClick?: () => void;
+  value?: string;
 }
 
 const AntInput: React.FC<IProps> = ({

@@ -3,10 +3,10 @@ import Fis from "../../components/Fis";
 import ProcessButtonGroup from "../../components/ProcessButtonGroup";
 import { Button, Table, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import type { InputRef } from "antd";
+// import type { InputRef } from "antd";
 
 import AntModal from "../../components/Modal/AntModal";
-import AntTables from "../../components/Tables/AntTables";
+// import AntTables from "../../components/Tables/AntTables";
 import { CRUDManager } from "../../features/CRUDManager";
 import { ListSettings } from "../../features/ListSettings";
 
@@ -15,6 +15,7 @@ export interface IFisItem {
   type?: "text" | "date" | "textWithFilter";
   disabled?: boolean;
   onClick?: () => void;
+  value?: string;
 }
 
 const Giris = () => {
@@ -27,6 +28,7 @@ const Giris = () => {
     {
       labelName: "İşlem Cinsi",
       type: "text",
+      value: "SARF_MALZEME_GİRİS",
     },
     {
       labelName: "Tarih",
@@ -53,7 +55,7 @@ const Giris = () => {
   ];
 
   const yeniSatirEkle = () => {
-    alert();
+    alert("daha düzenlenmedi");
   };
 
   useEffect(() => {

@@ -26,6 +26,7 @@ const Fis: React.FC<IProps> = ({ fisItems }) => {
               labelName={item.labelName}
               type={item.type}
               onClick={item.onClick}
+              value={item?.type}
             />
           ))}
         </div>
